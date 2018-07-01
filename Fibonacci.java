@@ -59,9 +59,39 @@ public class Fibonacci {
         return c;
     }
 
-    //O(logn) time and 
-    public
-    public static void main(String[] args){
+    //O(logn) time and space
+    public int logarithmic(int n){
+        if(n<0) return -1;
+        if(n<=1) return n;
+        int[][] matrix = new int[][]{{1,1},{1,0}};
+        power(matrix, n-1);
+        return matrix[0][0];
+    }
+
+    public void power(int[][] matrix, int k){
+        if(k<=1) return;
+        int[][] temp = new int[][]{{1,1},{1,0}};
+        power(matrix, k/2);
+        multiply(matrix, matrix);
+        if(k%2!=0) {
+            multiply(matrix, temp);
+        }
+    }
+
+    public void multiply(int[][] F, int[][] M){
+        int x =  F[0][0]*M[0][0] + F[0][1]*M[1][0];
+        int y =  F[0][0]*M[0][1] + F[0][1]*M[1][1];
+        int z =  F[1][0]*M[0][0] + F[1][1]*M[1][0];
+        int w =  F[1][0]*M[0][1] + F[1][1]*M[1][1];
+
+        F[0][0] = x;
+        F[0][1] = y;
+        F[1][0] = z;
+        F[1][1] = w;
+    }
+
+
+     public static void main(String[] args){
         Fibonacci f = new Fibonacci();
         System.out.println(f.recursive(9));
         System.out.println(f.dpBottomUp(9));
